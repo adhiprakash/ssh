@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class Screen1 extends StatefulWidget {
+  final SharedPreferences prefs;
+
+  Screen1({super.key, required this.prefs});
+
+  @override
+  State<Screen1> createState() => _Screen1State();
+}
+
+class _Screen1State extends State<Screen1> {
+  bool _isVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Screen 1'),
+      ),
+      body: Stack(
+        children: [
+          Container(
+            // Background image for the whole page
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('petti/sky.jpg'), // Replace with your background image asset path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+         
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              height: _isVisible ? 400 : 0, 
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Center(
+                child: Text(
+                  'Hi there',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ),
+            ),
+          ),
+          
+          Center(
+            child: IconButton(
+              icon: Icon(Icons.work,
+              color: Colors.white,
+               size: 50),
+              onPressed: () {
+                setState(() {
+                  _isVisible = !_isVisible; 
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
